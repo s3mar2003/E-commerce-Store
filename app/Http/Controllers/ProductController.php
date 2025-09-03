@@ -24,4 +24,32 @@ public function show($id)
 
     return view('shop.product-details', compact('product'));
 }
+public function create()
+{
+    return view('shop.create-product');
+}
+
+public function store(Request $request)
+{
+    // التحقق من المدخلات
+    $validated = $request->validate([
+        'name'        => 'required|min:3',
+        'description' => 'required|max:500',
+        'price'       => 'required|numeric|min:0',
+    ]);
+
+    // إنشاء كائن المنتج
+    $product = new Product();
+    $product->name = $validated['name'];
+    $product->description = $validated['description'];
+    $product->price = $validated['price'];
+    $product->on_sale = $request->has('on_sale');
+
+   
+
+    $product->save();
+
+    return redirect('/products')->with('success', 'Product created successfully!');
+}
+
 }
