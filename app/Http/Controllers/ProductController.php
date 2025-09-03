@@ -31,19 +31,23 @@ public function create()
 
 public function store(Request $request)
 {
-    // التحقق من المدخلات
     $validated = $request->validate([
         'name'        => 'required|min:3',
         'description' => 'required|max:500',
         'price'       => 'required|numeric|min:0',
+        'image' => 'nullable|image|max:2048',
     ]);
 
-    // إنشاء كائن المنتج
     $product = new Product();
     $product->name = $validated['name'];
     $product->description = $validated['description'];
     $product->price = $validated['price'];
     $product->on_sale = $request->has('on_sale');
+    if ($request->hasFile('image')) {
+    $path = $request->file('image')->store('products', 'public');
+    $product->image = $path;
+}
+
 
    
 
@@ -51,5 +55,42 @@ public function store(Request $request)
 
     return redirect('/products')->with('success', 'Product created successfully!');
 }
+public function edit($id)
+{
+    $product = Product::findOrFail($id); 
+    return view('shop.edit-product', compact('product'));
+}
 
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric|min:0',
+        
+    ]);
+
+    $product = Product::findOrFail($id);
+    $product->update([
+        'name' => $request->name,
+        'price' => $request->price,
+        'on_sale' => $request->has('on_sale'),
+        
+    ]);
+
+    return redirect('/products')->with('success', 'Product updated successfully!');
+}
+
+public function destroy($id)
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return redirect('/products')->with('error', 'Product not found.');
+    }
+
+    $product->delete();
+
+    return redirect('/products')->with('success', 'Product deleted successfully!');
+
+}
 }
