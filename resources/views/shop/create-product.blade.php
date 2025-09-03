@@ -2,45 +2,61 @@
 
 @section('content')
 <div class="container">
-    <h2>Create New Product</h2>
+    <h2 class="my-4">Create New Product</h2>
 
-    {{-- عرض الأخطاء --}}
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    {{-- عرض الرسائل --}}
     @if (session('success'))
-        <div style="color: green;">
+        <div class="alert alert-success">
             {{ session('success') }}
         </div>
     @endif
 
-    <form action="{{ url('/products') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('/products') }}" method="POST" enctype="multipart/form-data" class="mt-3">
         @csrf
 
-        <label>Name:</label><br>
-        <input type="text" name="name" value="{{ old('name') }}"><br><br>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+            @error('name')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <label>Description:</label><br>
-        <textarea name="description">{{ old('description') }}</textarea><br><br>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+            @error('description')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <label>Price:</label><br>
-        <input type="number" name="price" step="0.01" value="{{ old('price') }}"><br><br>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" name="price" class="form-control" step="0.01" value="{{ old('price') }}">
+            @error('price')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <label>On Sale:</label><br>
-        <input type="checkbox" name="on_sale" value="1" {{ old('on_sale') ? 'checked' : '' }}><br><br>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="on_sale" class="form-check-input" id="on_sale" value="1" {{ old('on_sale') ? 'checked' : '' }}>
+            <label class="form-check-label" for="on_sale">On Sale</label>
+            @error('on_sale')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <label>Image:</label><br>
-        <input type="file" name="image"><br><br>
+       <div class="mb-3">
+            <label for="image" class="form-label">Product Image</label>
+            <input type="file" name="image" class="form-control">
+            @error('image')
+                <div class="text-danger mt-1">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <button type="submit">Save</button>
+
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ url('/products') }}" class="btn btn-secondary ms-2">Cancel</a>
     </form>
 </div>
 @endsection

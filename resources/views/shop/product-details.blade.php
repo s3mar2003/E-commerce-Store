@@ -5,6 +5,10 @@
     <h1 class="my-4">Product Details</h1>
 
     <div class="card mb-4">
+        @if($product->image)
+           <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top mb-3" alt="{{ $product->name }}">
+            @endif
+
        
         <div class="card-body">
             <h3 class="card-title">{{ $product->name }}</h3>
