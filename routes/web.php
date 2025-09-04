@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ContactController;
+
 
 Route::get('/', [ShopController::class, 'index'])->name('home');
 
@@ -16,6 +18,13 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+Route::get('/contact', function () {
+    return view('shop.contact');
+});
+Route::post('/contact', [ContactController::class, 'submit']);
+
+
 
 
 Route::get('/product-details', [StoreController::class, 'productDetails'])->name('product.details');
