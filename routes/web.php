@@ -6,6 +6,14 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminController;
+
+
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/categories', [AdminController::class, 'categories'])->name('admin.categories');
+});
 
 
 Route::get('/', [ShopController::class, 'index'])->name('home');
@@ -18,6 +26,8 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+
 
 Route::get('/contact', function () {
     return view('shop.contact');
