@@ -1,0 +1,12 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h1>403 — Forbidden</h1>
+    <p>Sorry, you don't have permission to access this page.</p>
+    @auth
+        <p>User: {{ auth()->user()->email }}</p>
+    @endauth
+    <a href="{{ url('/') }}">Return to home</a>
+</div>
+@endsection
