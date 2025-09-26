@@ -18,9 +18,10 @@
                 <td>{{ $product->category?->name ?? '-' }}</td>
                 <td>{{ $product->price }}</td>
                 <td>
-                    @can('update', $product)
-                        <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-sm btn-primary">Edit</a>
-                    @endcan
+                   @can('update', $product)
+                     <button>Edit Product</button>
+                   @endcan
+
 
                     @can('delete', $product)
                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST" style="display:inline">
