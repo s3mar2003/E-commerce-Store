@@ -24,16 +24,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('access-admin-panel', function ($user) {
-            // If user is not admin, log an attempt and deny.
-            if (empty($user->is_admin) || ! $user->is_admin) {
-                Log::warning('Unauthorized attempt to access admin panel', [
-                    'user_id' => $user->id ?? null,
-                    'email' => $user->email ?? null,
-                    'timestamp' => now()->toDateTimeString(),
-                ]);
-                return false;
-            }
-            return true;
+                return $user->is_admin;
+
         });
     }
 }
