@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    
     /**
      * The policy mappings for the application.
      *
@@ -21,11 +22,13 @@ class AuthServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Gate::define('access-admin-panel', function ($user) {
+    if (! $user->is_admin) {
+        Log::warning('Unauthorized access attempt by user ID: ' . $user->id);
+    }
+    return $user->is_admin;
+});
         $this->registerPolicies();
 
-        Gate::define('access-admin-panel', function ($user) {
-                return $user->is_admin;
-
-        });
-    }
+}
 }

@@ -14,7 +14,7 @@
                     <div class="card-body py-5">
                         <h1 class="display-1 text-danger">403</h1>
                         <h2 class="mb-4">غير مصرح بالوصول</h2>
-                        <p class="lead">عذراً، ليس لديك الصلاحية للوصول إلى هذه الصفحة.</p>
+                        <p class="lead">عذراً، ليس لديك الصلاحية للوصول إلى هذه الصفحة</p>
                         <a href="{{ url('/') }}" class="btn btn-primary mt-3">العودة إلى الصفحة الرئيسية</a>
                         @auth
                         <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-3">العودة إلى لوحة التحكم</a>
