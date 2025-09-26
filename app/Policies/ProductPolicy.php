@@ -22,10 +22,11 @@ class ProductPolicy
         return true;
     }
 
-    public function update(User $user, Product $product): bool
-    {
-        return (bool) $user->is_admin;
-    }
+   public function update(User $user, Product $product)
+{
+    return $user->is_admin;
+}
+
 
     public function delete(User $user, Product $product): bool
     {
