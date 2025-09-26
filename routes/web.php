@@ -4,6 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeEmail;
+use App\Notifications\NewOrderNotification;
 
 
 Route::get('/', function () {
@@ -28,6 +32,15 @@ Route::middleware(['auth', 'can:access-admin-panel'])
         Route::get('/products', [ProductController::class, 'index']);
     });
 
+    Route::get('/test-mail', function () {
+    $user = User::first();
+
+    Mail::to($user->email)->send(new WelcomeEmail($user));
+
+    $user->notify(new NewOrderNotification((object)['id'=>123,'total'=>250]));
+
+    return 'Mail and Notification sent!';
+});
 
 
 
